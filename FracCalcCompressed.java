@@ -2,7 +2,6 @@ import java.util.Scanner;
 public class FracCalcCompressed {
     public static void main(String[] args) {
         boolean run = true;
-        // while loop to keep asking for new fractions
         while (run) {
             Scanner console = new Scanner(System.in);
             System.out.print("enter expression (or enter \"quit\"): ");
@@ -21,7 +20,6 @@ public class FracCalcCompressed {
         String frac2 = split[2];
         String[] fracs1 = frac1.split("/");
         String[] fracs2 = frac2.split("/");
-
         int frac1denom = 1;
         int frac2denom = 1;
         int frac1numer = 1;
@@ -39,17 +37,13 @@ public class FracCalcCompressed {
             frac2denom = Integer.parseInt(fracs2[1]);
         }
         String operation = split[1];
-        if (operation.equals("+")) {
-            return addition(frac1numer, frac1denom, frac2numer, frac2denom);
-        } else if (operation.equals("-")) {
-            return subtraction(frac1numer, frac1denom, frac2numer, frac2denom);
-        } else if (operation.equals("*")) {
-            return multiplication(frac1numer, frac1denom, frac2numer, frac2denom);
-        } else if (operation.equals("/")) {
-            return division(frac1numer, frac1denom, frac2numer, frac2denom);
-        } else {
-            return "Please enter a valid operator ( + , - , * , / )";
-        }
+        return switch (operation) {
+            case "+" -> addition(frac1numer, frac1denom, frac2numer, frac2denom);
+            case "-" -> subtraction(frac1numer, frac1denom, frac2numer, frac2denom);
+            case "*" -> multiplication(frac1numer, frac1denom, frac2numer, frac2denom);
+            case "/" -> division(frac1numer, frac1denom, frac2numer, frac2denom);
+            default -> "Please enter a valid operator ( + , - , * , / )";
+        };
     }
     public static String addition(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = (frac2D * frac1N) + (frac1D * frac2N);
@@ -91,7 +85,11 @@ public class FracCalcCompressed {
         return b == 0 ? a : gcd(b, a % b);
     }
     public static String simplify(int a, int b) {
-        long gcd = gcd(a, b);
+        int gcd = gcd(a, b);
+        int numer = a / gcd ;
+        int denom = b / gcd;
+        if(denom==1) return Integer.toString(numer);
+        if(numer > denom) return (numer/denom)+"_"+(numer%denom)+"/"+Math.abs(denom);
         return (a / gcd) + "/" + (b / gcd);
     }
 }
