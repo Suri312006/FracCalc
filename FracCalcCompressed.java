@@ -27,17 +27,15 @@ public class FracCalcCompressed {
         int frac1numer = 1;
         int frac2numer = 1;
         if (!frac1.contains("_") && !frac1.contains("/")) {
-            frac1denom = 1;
             frac1numer = Integer.parseInt(frac1);
         } else {
             frac1numer = findTotalNumer(frac1);
             frac1denom = Integer.parseInt(fracs1[1]);
         }
         if (!frac2.contains("_") && !frac2.contains("/")) {
-            frac2denom = 1;
             frac2numer = Integer.parseInt(frac2);
         } else {
-            frac2numer = findTotalNumer(frac1);
+            frac2numer = findTotalNumer(frac2);
             frac2denom = Integer.parseInt(fracs2[1]);
         }
         String operation = split[1];
@@ -56,22 +54,22 @@ public class FracCalcCompressed {
     public static String addition(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = (frac2D * frac1N) + (frac1D * frac2N);
         int resultDenomN = frac1D * frac2D;
-        return resultNumN + "/" + resultDenomN;
+        return simplify(resultNumN, resultDenomN);
     }
     public static String subtraction(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = (frac2D * frac1N) - (frac1D * frac2N);
         int resultDenomN = frac1D * frac2D;
-        return resultNumN + "/" + resultDenomN;
+        return simplify(resultNumN, resultDenomN);
     }
     public static String multiplication(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = frac1N * frac2N;
         int resultDenomN = frac1D * frac2D;
-        return resultNumN + "/" + resultDenomN;
+        return simplify(resultNumN, resultDenomN);
     }
     public static String division(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = frac1N * frac2D;
         int resultDenomN = frac1D * frac2N;
-        return resultNumN + "/" + resultDenomN;
+        return simplify(resultNumN, resultDenomN);
     }
     public static int findTotalNumer(String frac){
         int TotalNumerator;
@@ -89,5 +87,11 @@ public class FracCalcCompressed {
         }
         return TotalNumerator;
     }
-
+    public static int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
+    public static String simplify(int a, int b) {
+        long gcd = gcd(a, b);
+        return (a / gcd) + "/" + (b / gcd);
+    }
 }
