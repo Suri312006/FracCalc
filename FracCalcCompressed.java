@@ -66,20 +66,22 @@ public class FracCalcCompressed {
         return simplify(resultNumN, resultDenomN);
     }
     public static int findTotalNumer(String frac){
-        int TotalNumerator;
+
         if (frac.contains("_")) {
             String[] whole = frac.split("_");
             String wholenum = whole[0];
             String fraction = whole[1];
             String[] fracs = fraction.split("/");
             String numeratornumS = fracs[0];
-            TotalNumerator = Integer.parseInt(numeratornumS)+(Integer.parseInt(wholenum)*Integer.parseInt(fracs[1]));
+            if (Integer.parseInt(wholenum) < 0) return -1*Integer.parseInt(numeratornumS)+(Integer.parseInt(wholenum)*Integer.parseInt(fracs[1]));
+            return Integer.parseInt(numeratornumS)+(Integer.parseInt(wholenum)*Integer.parseInt(fracs[1]));
+
         } else {
             String[] fracs = frac.split("/");
             String numeratornumS = fracs[0];
-            TotalNumerator = Integer.parseInt(numeratornumS);
+            return Integer.parseInt(numeratornumS);
         }
-        return TotalNumerator;
+
     }
     public static int gcd(int a, int b) {
         return b == 0 ? a : gcd(b, a % b);
@@ -93,3 +95,4 @@ public class FracCalcCompressed {
         return (a / gcd) + "/" + (b / gcd);
     }
 }
+//FAILURE: Your calculator's answer: '-13/8' when inputted '4_1/2 - 5_9/8' did not match the expected answer: '-1_5/8' Test #35: Failed
