@@ -13,8 +13,7 @@ public class FracCalcCompressed {
             }
         }
     }
-    public static String produceAnswer(String input)// do not alter this method header
-    {
+    public static String produceAnswer(String input){// do not alter this method header
         String[] split = input.split(" ");
         String frac1 = split[0];
         String frac2 = split[2];
@@ -66,7 +65,6 @@ public class FracCalcCompressed {
         return simplify(resultNumN, resultDenomN);
     }
     public static int findTotalNumer(String frac){
-
         if (frac.contains("_")) {
             String[] whole = frac.split("_");
             String wholenum = whole[0];
@@ -75,24 +73,28 @@ public class FracCalcCompressed {
             String numeratornumS = fracs[0];
             if (Integer.parseInt(wholenum) < 0) return -1*Integer.parseInt(numeratornumS)+(Integer.parseInt(wholenum)*Integer.parseInt(fracs[1]));
             return Integer.parseInt(numeratornumS)+(Integer.parseInt(wholenum)*Integer.parseInt(fracs[1]));
-
         } else {
             String[] fracs = frac.split("/");
             String numeratornumS = fracs[0];
             return Integer.parseInt(numeratornumS);
         }
-
     }
     public static int gcd(int a, int b) {
         return b == 0 ? a : gcd(b, a % b);
     }
     public static String simplify(int a, int b) {
+        boolean neg = (((a < 0) && !(b <0)) || (!(a < 0) && (b <0)));
+        a = Math.abs(a);
+        b = Math.abs(b);
         int gcd = gcd(a, b);
         int numer = a / gcd ;
         int denom = b / gcd;
+        if(numer == 0) return "0";
+        if(denom==1 && neg) return "-"+numer;
+        if(numer > denom && neg) return "-"+(numer/denom)+"_"+(numer%denom)+"/"+Math.abs(denom);
         if(denom==1) return Integer.toString(numer);
         if(numer > denom) return (numer/denom)+"_"+(numer%denom)+"/"+Math.abs(denom);
+        if(neg) return "-"+(a / gcd) + "/" + (b / gcd);
         return (a / gcd) + "/" + (b / gcd);
     }
 }
-//FAILURE: Your calculator's answer: '-13/8' when inputted '4_1/2 - 5_9/8' did not match the expected answer: '-1_5/8' Test #35: Failed
