@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class MultiFracCalc {
+public class FinalFracCalc {
     public static void main(String[] args) {
         boolean run = true;
         while (run) {
