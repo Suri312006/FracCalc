@@ -1,5 +1,4 @@
-import java.util.Scanner;
-public class FracCalcCompressed {
+import java.util.Scanner; public class TheOneLiner {
     public static void main(String[] args) {
         boolean run = true;
         while (run) {
@@ -36,13 +35,12 @@ public class FracCalcCompressed {
             frac2denom = Integer.parseInt(fracs2[1]);
         }
         String operation = split[1];
-        if(frac1denom == 0 || frac2denom == 0) {return "ERROR: Cannot divide by zero.";}
         return switch (operation) {
             case "+" -> addition(frac1numer, frac1denom, frac2numer, frac2denom);
             case "-" -> subtraction(frac1numer, frac1denom, frac2numer, frac2denom);
             case "*" -> multiplication(frac1numer, frac1denom, frac2numer, frac2denom);
             case "/" -> division(frac1numer, frac1denom, frac2numer, frac2denom);
-            default -> "ERROR: Input is in an invalid format.";
+            default -> "Please enter a valid operator ( + , - , * , / )";
         };
     }
     public static String addition(int frac1N, int frac1D, int frac2N, int frac2D){
