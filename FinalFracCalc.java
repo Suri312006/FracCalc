@@ -8,32 +8,20 @@ public class FinalFracCalc {
             String expression = console.nextLine();
             if (expression.contains("quit")) {run = false;}
             else System.out.println(produceAnswer(expression));
-        }
-    }
+        }}
     public static String produceAnswer(String input){// do not alter this method header
-        String[] split = input.split(" ");
+        String[] split = lickityShplit(input, ' ');
         for(int i = 0; i<split.length/2; i++) {
             String frac1 = split[0];
             String frac2 = split[2];
-            String[] fracs1 = frac1.split("/");
-            String[] fracs2 = frac2.split("/");
+            String[] fracs1 = lickityShplit(frac1, '/');
+            String[] fracs2 = lickityShplit(frac2, '/');
             String operation = split[1];
-            int frac1denom = 1;
-            int frac2denom = 1;
-            int frac1numer = 1;
-            int frac2numer = 1;
-            if (!frac1.contains("_") && !frac1.contains("/")) {
-                frac1numer = Integer.parseInt(frac1);
-            } else {
-                frac1numer = findTotalNumer(frac1);
-                frac1denom = Integer.parseInt(fracs1[1]);
-            }
-            if (!frac2.contains("_") && !frac2.contains("/")) {
-                frac2numer = Integer.parseInt(frac2);
-            } else {
-                frac2numer = findTotalNumer(frac2);
-                frac2denom = Integer.parseInt(fracs2[1]);
-            }
+            int frac1denom = 1, frac2denom = 1, frac1numer = 1, frac2numer = 1;
+            if (!frac1.contains("_") && !frac1.contains("/")) {frac1numer = Integer.parseInt(frac1);}
+            else {frac1numer = findTotalNumer(frac1); frac1denom = Integer.parseInt(fracs1[1]);}
+            if (!frac2.contains("_") && !frac2.contains("/")) { frac2numer = Integer.parseInt(frac2);}
+            else {frac2numer = findTotalNumer(frac2); frac2denom = Integer.parseInt(fracs2[1]);}
             if ((frac1denom == 0) || (frac2denom == 0) || operation.equals("/") && frac2numer == 0) {return "ERROR: Cannot divide by zero.";}
             split[0] = switch (operation) {
                 case "+" -> addition(frac1numer, frac1denom, frac2numer, frac2denom);
@@ -49,34 +37,30 @@ public class FinalFracCalc {
     public static String addition(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = (frac2D * frac1N) + (frac1D * frac2N);
         int resultDenomN = frac1D * frac2D;
-        return simplify(resultNumN, resultDenomN);
-    }
+        return simplify(resultNumN, resultDenomN);}
     public static String subtraction(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = (frac2D * frac1N) - (frac1D * frac2N);
         int resultDenomN = frac1D * frac2D;
-        return simplify(resultNumN, resultDenomN);
-    }
+        return simplify(resultNumN, resultDenomN);}
     public static String multiplication(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = frac1N * frac2N;
         int resultDenomN = frac1D * frac2D;
-        return simplify(resultNumN, resultDenomN);
-    }
+        return simplify(resultNumN, resultDenomN);}
     public static String division(int frac1N, int frac1D, int frac2N, int frac2D){
         int resultNumN = frac1N * frac2D;
         int resultDenomN = frac1D * frac2N;
-        return simplify(resultNumN, resultDenomN);
-    }
+        return simplify(resultNumN, resultDenomN);}
     public static int findTotalNumer(String frac){
         if (frac.contains("_")) {
-            String[] whole = frac.split("_");
+            String[] whole = lickityShplit(frac, '_');
             String wholenum = whole[0];
             String fraction = whole[1];
-            String[] fracs = fraction.split("/");
+            String[] fracs = lickityShplit(fraction, '/');
             String numeratornumS = fracs[0];
             if (Integer.parseInt(wholenum) < 0) return -1*Integer.parseInt(numeratornumS)+(Integer.parseInt(wholenum)*Integer.parseInt(fracs[1]));
             return Integer.parseInt(numeratornumS)+(Integer.parseInt(wholenum)*Integer.parseInt(fracs[1]));
         } else {
-            String[] fracs = frac.split("/");
+            String[] fracs = lickityShplit(frac, '/');
             String numeratornumS = fracs[0];
             return Integer.parseInt(numeratornumS);
         }
@@ -96,5 +80,21 @@ public class FinalFracCalc {
         if(numer > denom) return (numer/denom)+"_"+(numer%denom)+"/"+Math.abs(denom);
         if(neg) return "-"+(a / gcd) + "/" + (b / gcd);
         return (a / gcd) + "/" + (b / gcd);
+    }
+    public static String[] lickityShplit(String input, char target){
+        int sizeCount = 0;
+        for(int i = 0; i < input.length(); i++){if(input.charAt(i) == target)sizeCount++;}
+        String[] working = new String[sizeCount+1];
+        int lastBreak = 0;
+        int arrCount = 0;
+        for(int i = 0; i < input.length(); i++){
+            if(input.charAt(i) == target){
+                working[arrCount] = input.substring(lastBreak,i);
+                arrCount++;
+                lastBreak = i+1;
+            }
+            if(i == input.length()-1){working[arrCount] = input.substring(lastBreak,i+1);}
+        }
+        return working;
     }
 }
